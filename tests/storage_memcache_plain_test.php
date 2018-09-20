@@ -97,7 +97,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
             $registry = $storage->getRegistry();
 
             $location = $this->getTempDir() . DIRECTORY_SEPARATOR;
-            list( $identifier, $dataObj ) = each( $registry[$location][$id] );
+            $identifier = key( $registry[$location][$id] );
             $registry[$location][$id][$identifier]->time = time() - 100;
             $storage->setRegistry( $registry );
 
@@ -128,7 +128,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
             $registry = $storage->getRegistry();
 
             $location = $this->getTempDir() . DIRECTORY_SEPARATOR;
-            list( $identifier, $dataObj ) = each( $registry[$location][$id] );
+            $identifier = key( $registry[$location][$id] );
             $registry[$location][$id][$identifier]->time = time() - 100;
             $storage->setRegistry( $registry );
 
