@@ -212,7 +212,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         $storage->restore( $key );
         $registry = $storage->getRegistry();
 
-        list( $identifier, $dataArr ) = each( $registry );
+        $identifier = key( $registry );
 
         $dataFetched = $storage->fetchData( $identifier, true );
         $this->assertEquals( $data, $dataFetched );
