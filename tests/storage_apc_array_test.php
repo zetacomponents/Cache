@@ -1,7 +1,7 @@
 <?php
 /**
- * ezcCacheStorageFileApcArrayTest 
- * 
+ * ezcCacheStorageFileApcArrayTest
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -9,9 +9,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -26,14 +26,14 @@
  */
 
 /**
- * Require parent test class. 
+ * Require parent test class.
  */
 require_once 'storage_test.php';
 require_once 'wrappers/apc_array_wrapper.php';
 
 /**
- * Test suite for ezcCacheStorageFileApcArray class. 
- * 
+ * Test suite for ezcCacheStorageFileApcArray class.
+ *
  * @package Cache
  * @subpackage Tests
  */
@@ -49,8 +49,8 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         1 => array( 1, 2, 3 ),
         2 => array( 'a', 1, 'b', 2, 'c', 3 ),
         3 => array(
-            1, 2, 3, 
-            array( 'a', 'b', 'c' ), 
+            1, 2, 3,
+            array( 'a', 'b', 'c' ),
             4, 5
         ),
         4 => array(
@@ -68,13 +68,13 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
        10 => 12.3746,
     );
 
-    protected function setUp()
+    protected function setUp() : void
     {
         if ( !ezcBaseFeatures::hasExtensionSupport( 'apc' ) )
         {
             $this->markTestSkipped( "PHP must have APC support." );
         }
-        
+
         // Class name == <inheriting class> - "Test"
         $storageClass = ( $this->storageClass = substr( get_class( $this ), 0, strlen( get_class(  $this ) ) - 4 ) );
         $this->storage = new $storageClass( $this->createTempDir( 'ezcCacheTest' ), array( 'ttl' => 10 ) );
@@ -92,7 +92,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         $options = array( 'ttl' => 10 );
         $storage = new ezcCacheStorageFileApcArrayWrapper( $this->getTempDir(), $options );
 
-        foreach ( $this->data as $id => $dataArr ) 
+        foreach ( $this->data as $id => $dataArr )
         {
             $storage->store( $id, $dataArr );
 
@@ -125,7 +125,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         $options = array( 'ttl' => 10 );
         $storage = new ezcCacheStorageFileApcArrayWrapper( $this->getTempDir(), $options );
 
-        foreach ( $this->data as $id => $dataArr ) 
+        foreach ( $this->data as $id => $dataArr )
         {
             $attributes = array(
                 'name'      => 'test',
@@ -155,7 +155,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
             $data = $storage->restore( $id, $attributes );
             $this->assertTrue( $data === false, "Restore data broken for ID <{$id}>." );
         }
-        
+
         $this->removeTempDir();
     }
 
@@ -180,7 +180,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         {
             $this->assertEquals( "APC store failed.", $e->getMessage() );
         }
-        
+
         $this->removeTempDir();
     }
 
@@ -283,12 +283,12 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
     public function testStorageFileApcArrayOptions()
     {
         $opt = new ezcCacheStorageFileApcArrayOptions();
-        
+
         $this->assertTrue( isset( $opt->ttl ) );
         $this->assertTrue( isset( $opt->extension ) );
         $this->assertTrue( isset( $opt->permissions ) );
         $this->assertFalse( isset( $opt->foo ) );
-        
+
         $this->assertEquals( $opt->ttl, 86400 );
         $this->assertEquals( $opt->extension, ".cache" );
         $this->assertEquals( $opt->permissions, 0644 );
@@ -310,7 +310,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
             'extension',
             array( '.foo' )
         );
-        
+
         $this->assertSetPropertyFails(
             $opt,
             'ttl',
@@ -334,12 +334,12 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
     public function testStorageApcOptions()
     {
         $opt = new ezcCacheStorageFileApcArrayOptions();
-        
+
         $this->assertTrue( isset( $opt->ttl ) );
         $this->assertTrue( isset( $opt->extension ) );
         $this->assertTrue( isset( $opt->permissions ) );
         $this->assertFalse( isset( $opt->foo ) );
-        
+
         $this->assertEquals( $opt->ttl, 86400 );
         $this->assertEquals( $opt->extension, ".cache" );
         $this->assertEquals( $opt->permissions, 0644 );
@@ -361,7 +361,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
             'extension',
             array( '.foo' )
         );
-        
+
         $this->assertSetPropertyFails(
             $opt,
             'ttl',
@@ -381,21 +381,21 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         );
 
     }
-    
+
     public function testResetSuccess()
     {
         $options = array( 'ttl' => 10 );
         $storage = new ezcCacheStorageFileApcArray( $this->getTempDir( __CLASS__ ), $options );
         $storage->reset();
 
-        $data = array( 
+        $data = array(
             'ID',
             'Some/Dir/ID',
             'Some/other/Dir/ID/1',
             'Some/other/Dir/ID/2',
             'Some/other/Dir/ID/3',
         );
-        foreach ( $data as $id ) 
+        foreach ( $data as $id )
         {
             $storage->store( $id, $id );
         }
@@ -422,7 +422,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         );
         $storage->reset();
 
-        $data = array( 
+        $data = array(
             'ID',
             'Some/Dir/ID',
             'Some/other/Dir/ID/1',
@@ -434,7 +434,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
             'lang' => 'en',
         );
 
-        foreach ( $data as $id ) 
+        foreach ( $data as $id )
         {
             $storage->store( $id, $id, $attributes );
         }
@@ -450,7 +450,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         $deleted = $storage->delete( null, $attributes, true );
 
         $this->assertEquals(
-            array( 
+            array(
                 'ID',
                 'Some/Dir/ID',
                 'Some/other/Dir/ID/1',
@@ -470,7 +470,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         );
         $storage->reset();
 
-        $data = array( 
+        $data = array(
             'ID',
             'Some/Dir/ID',
             'Some/other/Dir/ID/1',
@@ -478,7 +478,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
             'Some/other/Dir/ID/3',
         );
 
-        foreach ( $data as $id ) 
+        foreach ( $data as $id )
         {
             $storage->store( $id, $id );
         }
@@ -504,7 +504,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         );
         $storage->reset();
 
-        $data = array( 
+        $data = array(
             'ID',
             'Some/Dir/ID',
             'Some/other/Dir/ID/1',
@@ -512,7 +512,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
             'Some/other/Dir/ID/3',
         );
 
-        foreach ( $data as $id ) 
+        foreach ( $data as $id )
         {
             $storage->store( $id, $id );
         }
@@ -523,7 +523,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         $purgedIds = $storage->purge( 3 );
 
         $this->assertEquals(
-            array( 
+            array(
                 'ID',
                 'Some/Dir/ID',
                 'Some/other/Dir/ID/1',
@@ -600,7 +600,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
             $opts
         );
         $secondStorage->reset();
-        
+
         $lockKey = urlencode( $storage->getLocation() ) . '_'
             . $storage->options->lockKey;
 
@@ -697,7 +697,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
             array( 'ttl' => 1 )
         );
         $storage->reset();
-        
+
         $metaDataKey = urlencode( $storage->getLocation() ) . '_'
             . $storage->options->metaDataKey;
 
@@ -783,7 +783,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
 
     public static function suite()
 	{
-		return new PHPUnit_Framework_TestSuite( __CLASS__ );
+		return new PHPUnit\Framework\TestSuite( __CLASS__ );
 	}
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 /**
- * ezcCacheStackLfuReplacementStrategyTest 
- * 
+ * ezcCacheStackLfuReplacementStrategyTest
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -9,9 +9,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -26,22 +26,22 @@
  */
 
 /**
- * Test suite for ezcCacheManager class. 
- * 
+ * Test suite for ezcCacheManager class.
+ *
  * @package Cache
  * @subpackage Tests
  */
 class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
 {
     /**
-     * suite 
-     * 
+     * suite
+     *
      * @static
      * @access public
      */
     public static function suite()
     {
-        return new PHPUnit_Framework_TestSuite( __CLASS__ );
+        return new PHPUnit\Framework\TestSuite( __CLASS__ );
     }
 
     public function testCreateMetaData()
@@ -113,7 +113,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             'Meta data entry not created correctly.'
         );
 
-        $this->assertEquals( 
+        $this->assertEquals(
             array(
                 'id_6' => true,
             ),
@@ -171,7 +171,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             'Meta data entry not kept correctly.'
         );
 
-        $this->assertEquals( 
+        $this->assertEquals(
             array(
                 'storage_id_42' => array(
                     'id_1' => true,
@@ -230,7 +230,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             'Meta data entry not created correctly.'
         );
 
-        $this->assertEquals( 
+        $this->assertEquals(
             array(
                 'storage_id_1' => array(
                     'id_6' => true,
@@ -255,7 +255,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             5,
             0.5
         );
-        
+
         $now = time();
 
         // Store max number of items
@@ -335,7 +335,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
         );
 
         // Storage has been saved correctly
-        $this->assertEquals( 
+        $this->assertEquals(
             array(
                 'storage_id_1' => array(
                     'id_1' => true, // Old
@@ -402,7 +402,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             5,
             0.5
         );
-        
+
         $now = time();
 
         // Store max number of items
@@ -467,7 +467,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
         );
 
         // Storage data updated correctly
-        $this->assertEquals( 
+        $this->assertEquals(
             array(
                 'storage_id_1' => array(
                     'id_1' => true,
@@ -540,7 +540,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             5,
             0.5
         );
-        
+
         $now = time();
 
         // Store max number of items
@@ -621,7 +621,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
         );
 
         // Storage has been saved correctly
-        $this->assertEquals( 
+        $this->assertEquals(
             array(
                 'storage_id_1' => array(
                     'id_1' => true, // Old
@@ -688,7 +688,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             5,
             0.5
         );
-        
+
         $now = time();
 
         // Store max number of items
@@ -754,7 +754,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
         );
 
         // Storage data updated correctly
-        $this->assertEquals( 
+        $this->assertEquals(
             array(
                 'storage_id_1' => array(
                     'id_1' => true,
@@ -827,7 +827,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             5,
             0.5
         );
-        
+
         $now = time();
 
         // Store max number of items
@@ -897,7 +897,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
         );
 
         // Storage data updated correctly
-        $this->assertEquals( 
+        $this->assertEquals(
             array(
                 'storage_id_1' => array(
                     'id_1' => true,
@@ -970,7 +970,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             5,
             0.5
         );
-        
+
         $now = time();
 
         // Store max number of items
@@ -994,7 +994,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
                 'id_1' => 100,
                 'id_2' => 150,  // Expired
                 'id_3' => 23,
-                'id_4' => 150,  
+                'id_4' => 150,
                 'id_5' => 42,   // Kept, since not in actual storage
             ),
             'storageData' => array(
@@ -1038,7 +1038,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
         );
 
         // Storage has been saved correctly
-        $this->assertEquals( 
+        $this->assertEquals(
             array(
                 'storage_id_1' => array(
                     'id_1' => true,
@@ -1066,7 +1066,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
                 'id_1' => 100,
                 'id_2' => 150,  // Expired
                 'id_3' => 23,
-                'id_4' => 150,  
+                'id_4' => 150,
                 'id_5' => 42,   // Kept, since not in actual storage
             ),
             $metaData['replacementData'],
@@ -1098,12 +1098,12 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             5,
             0.5
         );
-        
+
         $now = time();
 
         // Store max number of items
         $conf->storage->store( 'id_1', 'id_1_content' );
-        
+
         $meta = new ezcCacheStackLfuMetaData();
         $meta->setState( array(
             'replacementData' => array(
@@ -1144,7 +1144,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             24,
             $metaData['replacementData']['id_1']
         );
-        
+
         // Storage data kept correctly
         $this->assertEquals(
             array(
@@ -1174,19 +1174,19 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             5,
             0.5
         );
-        
+
         $now = time();
 
         // Store max number of items
         $conf->storage->store( 'id_1', 'id_1_content' );
-        
+
         // Expire
         touch(
             $tmpDir . '/' . $conf->storage->generateIdentifier( 'id_1' ),
             ( $now - 40 ),
             ( $now - 40 )
         );
-        
+
         $meta = new ezcCacheStackLfuMetaData();
         $meta->setState( array(
             'replacementData' => array(
@@ -1228,7 +1228,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             ),
             $metaData['replacementData']
         );
-        
+
         // Storage data kept correctly
         $this->assertEquals(
             array(
@@ -1255,7 +1255,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             5,
             0.5
         );
-        
+
         $meta = new ezcCacheStackLfuMetaData();
         $meta->setState( array(
             'replacementData' => array(),
@@ -1285,7 +1285,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             array(),
             $metaData['replacementData']
         );
-        
+
         // Storage data kept correctly
         $this->assertEquals(
             array(),
@@ -1311,14 +1311,14 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
 
         // Store max number of items
         $conf->storage->store( 'id_1', 'id_1_content' );
-        
+
         // Cache location not empty
         $this->assertEquals(
             1,
             count( glob( "$tmpDir/*" ) ),
             'Cache location contains unknown items.'
         );
-        
+
         $meta = new ezcCacheStackLfuMetaData();
         $meta->setState( array(
             'replacementData' => array(
@@ -1360,7 +1360,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             ),
             $metaData['replacementData']
         );
-        
+
         // Storage data kept correctly
         $this->assertEquals(
             array(
@@ -1371,7 +1371,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             $metaData['storageData'],
             'Storage data not correctly updated.'
         );
-        
+
         // Cache location empty
         $this->assertEquals(
             0,
@@ -1431,7 +1431,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             array(),
             $metaData['replacementData']
         );
-        
+
         // Storage data kept correctly
         $this->assertEquals(
             array(
@@ -1470,14 +1470,14 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
         $conf->storage->store( 'id_1', 'id_1_content', array( 'lang' => 'en' ) );
         $conf->storage->store( 'id_2', 'id_2_content' );
         $conf->storage->store( 'id_3', 'id_3_content', array( 'lang' => 'en' ) );
-        
+
         // Cache location not empty
         $this->assertEquals(
             3,
             count( glob( "$tmpDir/*" ) ),
             'Cache location contains unknown items.'
         );
-        
+
         $meta = new ezcCacheStackLfuMetaData();
         $meta->setState( array(
             'replacementData' => array(
@@ -1527,7 +1527,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             $metaData['replacementData'],
             "Meta data not actualized correctly."
         );
-        
+
         // Storage data kept correctly
         $this->assertEquals(
             array(
@@ -1541,7 +1541,7 @@ class ezcCacheStackLfuReplacementStrategyTest extends ezcTestCase
             $metaData['storageData'],
             'Storage data not correctly updated.'
         );
-        
+
         // Cache location empty
         $this->assertEquals(
             1,

@@ -1,7 +1,7 @@
 <?php
 /**
- * ezcCacheStorageOptionsTest 
- * 
+ * ezcCacheStorageOptionsTest
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -9,9 +9,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -29,7 +29,7 @@ require_once 'wrappers/memcache_wrapper.php';
 
 /**
  * Abstract base test class for ezcCacheStorageOptions tests.
- * 
+ *
  * @package Cache
  * @subpackage Tests
  */
@@ -37,23 +37,23 @@ class ezcCacheStorageOptionsTest extends ezcTestCase
 {
 	public static function suite()
 	{
-		return new PHPUnit_Framework_TestSuite( "ezcCacheStorageOptionsTest" );
+		return new PHPUnit\Framework\TestSuite( "ezcCacheStorageOptionsTest" );
 	}
 
     /**
      * testConstructorNew
-     * 
+     *
      * @access public
      */
     public function testConstructor()
     {
         $fake = new ezcCacheStorageOptions(
-            array( 
+            array(
                 "ttl" => 86400,
                 "extension" => ".cache",
             )
         );
-        $this->assertEquals( 
+        $this->assertEquals(
             $fake,
             new ezcCacheStorageOptions(),
             'Default values incorrect for ezcCacheStorageOptions.'
@@ -82,7 +82,7 @@ class ezcCacheStorageOptionsTest extends ezcTestCase
     public function testGetAccessFailure()
     {
         $opt = new ezcCacheStorageOptions();
-        
+
         try
         {
             echo $opt->permissions;
@@ -109,7 +109,7 @@ class ezcCacheStorageOptionsTest extends ezcTestCase
     public function testSetAccessFailure()
     {
         $opt = new ezcCacheStorageOptions();
-        
+
         $this->genericSetFailureTest( $opt, "ttl", "foo" );
         $this->genericSetFailureTest( $opt, "ttl", true );
         $this->genericSetFailureTest( $opt, "extension", 23 );
@@ -129,7 +129,7 @@ class ezcCacheStorageOptionsTest extends ezcTestCase
     public function testIssetAccess()
     {
         $opt = new ezcCacheStorageOptions();
-        
+
         $this->assertTrue( isset( $opt->ttl ) );
         $this->assertTrue( isset( $opt->extension ) );
         $this->assertFalse( isset( $opt->permissions ) );

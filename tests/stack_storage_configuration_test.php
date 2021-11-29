@@ -1,7 +1,7 @@
 <?php
 /**
- * ezcCacheStackStorageConfigurationTest 
- * 
+ * ezcCacheStackStorageConfigurationTest
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -9,9 +9,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -26,22 +26,22 @@
  */
 
 /**
- * Test suite for ezcCacheManager class. 
- * 
+ * Test suite for ezcCacheManager class.
+ *
  * @package Cache
  * @subpackage Tests
  */
 class ezcCacheStackStorageConfigurationTest  extends ezcTestCase
 {
     /**
-     * suite 
-     * 
+     * suite
+     *
      * @static
      * @access public
      */
     public static function suite()
     {
-        return new PHPUnit_Framework_TestSuite( __CLASS__ );
+        return new PHPUnit\Framework\TestSuite( __CLASS__ );
     }
 
     public function testCtorSuccess()
@@ -200,7 +200,7 @@ class ezcCacheStackStorageConfigurationTest  extends ezcTestCase
             1000,
             0.4
         );
-        
+
         try
         {
             echo $config->foo;
@@ -244,7 +244,7 @@ class ezcCacheStackStorageConfigurationTest  extends ezcTestCase
             $this->fail( 'Exception not thrown on set access.' );
         }
         catch ( ezcBasePropertyPermissionException $e ) {}
-        
+
         try
         {
             $config->foo = true;

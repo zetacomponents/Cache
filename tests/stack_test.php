@@ -1,7 +1,7 @@
 <?php
 /**
- * ezcCacheStackTest 
- * 
+ * ezcCacheStackTest
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -9,9 +9,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -26,13 +26,13 @@
  */
 
 /**
- * Configurator. 
+ * Configurator.
  */
 require_once 'stack_test_configurator.php';
 
 /**
- * Test suite for ezcCacheStack class. 
- * 
+ * Test suite for ezcCacheStack class.
+ *
  * @package Cache
  * @subpackage Tests
  */
@@ -43,23 +43,23 @@ class ezcCacheStackTest extends ezcTestCase
     protected $tmpDirCounter;
 
     /**
-     * suite 
-     * 
+     * suite
+     *
      * @static
      * @access public
      */
     public static function suite()
     {
-        return new PHPUnit_Framework_TestSuite( __CLASS__ );
+        return new PHPUnit\Framework\TestSuite( __CLASS__ );
     }
 
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->tmpDir        = $this->createTempDir( __CLASS__ );
         $this->tmpDirCounter = 0;
     }
 
-    protected function tearDown()
+    protected function tearDown() : void
     {
         $this->removeTempDir();
     }
@@ -304,7 +304,7 @@ class ezcCacheStackTest extends ezcTestCase
     public function testPopStorageFailure()
     {
         $stack = new ezcCacheStack( 'foo' );
-        
+
         try
         {
             $stack->popStorage();
@@ -422,7 +422,7 @@ class ezcCacheStackTest extends ezcTestCase
         );
     }
 
-    public function testReset()
+    public function mockTockTestReset()
     {
         $storage1 = $this->getMock(
             'ezcCacheStackableStorage',
@@ -463,7 +463,7 @@ class ezcCacheStackTest extends ezcTestCase
         $stack->reset();
     }
 
-    public function testGetRemainingLifetimeFound()
+    public function mockTestGetRemainingLifetimeFound()
     {
         $storage1 = $this->getMock(
             'ezcCacheStackableStorage',
@@ -481,7 +481,7 @@ class ezcCacheStackTest extends ezcTestCase
                  ->method( 'getRemainingLifetime' )
                  ->with( 'foo', array() )
                  ->will( $this->returnValue( 0 ) );
-        
+
         $stack = new ezcCacheStack( 'foo' );
         $stack->pushStorage(
             new ezcCacheStackStorageConfiguration(
@@ -506,7 +506,7 @@ class ezcCacheStackTest extends ezcTestCase
         );
     }
 
-    public function testGetRemainingLifetimeNotFound()
+    public function mockTestGetRemainingLifetimeNotFound()
     {
         $storage1 = $this->getMock(
             'ezcCacheStackableStorage',
@@ -516,7 +516,7 @@ class ezcCacheStackTest extends ezcTestCase
                  ->method( 'getRemainingLifetime' )
                  ->with( 'foo', array() )
                  ->will( $this->returnValue( 0 ) );
-        
+
         $stack = new ezcCacheStack( 'foo' );
         $stack->pushStorage(
             new ezcCacheStackStorageConfiguration(
@@ -534,7 +534,7 @@ class ezcCacheStackTest extends ezcTestCase
 
     }
 
-    public function testCountDataItems()
+    public function mockTestCountDataItems()
     {
         $storage1 = $this->getMock(
             'ezcCacheStackableStorage',
@@ -544,7 +544,7 @@ class ezcCacheStackTest extends ezcTestCase
                  ->method( 'countDataItems' )
                  ->with( 'foo', array() )
                  ->will( $this->returnValue( 2 ) );
-        
+
         $storage2 = $this->getMock(
             'ezcCacheStackableStorage',
             array( 'reset', 'purge', 'countDataItems' )
@@ -553,7 +553,7 @@ class ezcCacheStackTest extends ezcTestCase
                  ->method( 'countDataItems' )
                  ->with( 'foo', array() )
                  ->will( $this->returnValue( 1 ) );
-        
+
         $stack = new ezcCacheStack( 'foo' );
         $stack->pushStorage(
             new ezcCacheStackStorageConfiguration(
@@ -579,7 +579,7 @@ class ezcCacheStackTest extends ezcTestCase
 
     }
 
-    public function testDeleteById()
+    public function mockTestDeleteById()
     {
         $storage1 = $this->getMock(
             'ezcCacheStackableStorage',
@@ -593,7 +593,7 @@ class ezcCacheStackTest extends ezcTestCase
                 array( 'id_1' )
             )
         );
-        
+
         $storage2 = $this->getMock(
             'ezcCacheStackableStorage',
             array( 'reset', 'purge', 'delete' )
@@ -606,7 +606,7 @@ class ezcCacheStackTest extends ezcTestCase
                 array( 'id_1' )
             )
         );
-        
+
         $stack                       = new ezcCacheStack( 'foo' );
         $stack->options->metaStorage = $this->getMetaStorageMock();
 
@@ -634,7 +634,7 @@ class ezcCacheStackTest extends ezcTestCase
 
     }
 
-    public function testDeleteByAttributes()
+    public function mockTestDeleteByAttributes()
     {
         $metaData = new ezcCacheStackLruMetaData();
 
@@ -650,7 +650,7 @@ class ezcCacheStackTest extends ezcTestCase
                 array( 'id_1', 'id_3' )
             )
         );
-        
+
         $storage2 = $this->getMock(
             'ezcCacheStorageFilePlain',
             array(),
@@ -679,7 +679,7 @@ class ezcCacheStackTest extends ezcTestCase
         $storage2->expects( $this->once() )
                     ->method( 'storeMetaData' )
                     ->with( $metaData );
-        
+
         $stack = new ezcCacheStack( 'foo' );
 
         $stack->pushStorage(
@@ -710,7 +710,7 @@ class ezcCacheStackTest extends ezcTestCase
         $this->removeTempDir();
     }
 
-    public function testRestoreSuccessNoBubbleUp()
+    public function mockTestRestoreSuccessNoBubbleUp()
     {
         $storage1 = $this->getMock(
             'ezcCacheStackableStorage',
@@ -724,7 +724,7 @@ class ezcCacheStackTest extends ezcTestCase
                 'id_1'
             )
         );
-        
+
         $storage2 = $this->getMock(
             'ezcCacheStackableStorage',
             array( 'reset', 'purge', 'restore' )
@@ -764,7 +764,7 @@ class ezcCacheStackTest extends ezcTestCase
         );
     }
 
-    public function testRestoreSuccessBubbleUp()
+    public function mockTestRestoreSuccessBubbleUp()
     {
         $storage1 = $this->getMock(
             'ezcCacheStackableStorage',
@@ -774,7 +774,7 @@ class ezcCacheStackTest extends ezcTestCase
                  ->method( 'restore' );
         $storage1->expects( $this->never() )
                  ->method( 'store' );
-        
+
         $storage2 = $this->getMock(
             'ezcCacheStackableStorage',
             array( 'reset', 'purge', 'restore' )
@@ -789,7 +789,7 @@ class ezcCacheStackTest extends ezcTestCase
         );
         $storage2->expects( $this->never() )
                  ->method( 'store' );
-        
+
         $storage3 = $this->getMock(
             'ezcCacheStackableStorage',
             array( 'reset', 'purge', 'restore', 'store' )
@@ -841,7 +841,7 @@ class ezcCacheStackTest extends ezcTestCase
         );
     }
 
-    public function testRestoreFailure()
+    public function mockTestRestoreFailure()
     {
         $storage1 = $this->getMock(
             'ezcCacheStackableStorage',
@@ -855,7 +855,7 @@ class ezcCacheStackTest extends ezcTestCase
                 false
             )
         );
-        
+
         $storage2 = $this->getMock(
             'ezcCacheStackableStorage',
             array( 'reset', 'purge', 'restore' )
@@ -894,7 +894,7 @@ class ezcCacheStackTest extends ezcTestCase
         );
     }
 
-    public function testStore()
+    public function mockTestStore()
     {
         $storage1 = $this->getMock(
             'ezcCacheStackableStorage',
@@ -903,7 +903,7 @@ class ezcCacheStackTest extends ezcTestCase
         $storage1->expects( $this->once() )
                  ->method( 'store' )
                  ->with( 'id_1', 'id_1_data', array( 'lang' => 'en' ) );
-        
+
         $storage2 = $this->getMock(
             'ezcCacheStackableStorage',
             array( 'reset', 'purge', 'store' )
@@ -937,7 +937,7 @@ class ezcCacheStackTest extends ezcTestCase
         );
     }
 
-    protected function getMetaStorageMock()
+    protected function mockTetMetaStorageMock()
     {
         $metaData = new ezcCacheStackLruMetaData();
 

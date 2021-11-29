@@ -1,7 +1,7 @@
 <?php
 /**
- * ezcCacheStorageMemcachePlainTest 
- * 
+ * ezcCacheStorageMemcachePlainTest
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -9,9 +9,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -26,14 +26,14 @@
  */
 
 /**
- * Require parent test class. 
+ * Require parent test class.
  */
 require_once 'storage_test.php';
 require_once 'wrappers/memcache_wrapper.php';
 
 /**
- * Test suite for ezcCacheStorageMemcachePlain class. 
- * 
+ * Test suite for ezcCacheStorageMemcachePlain class.
+ *
  * @package Cache
  * @subpackage Tests
  */
@@ -46,7 +46,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
      */
     protected $testData;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         if ( !ezcBaseFeatures::hasExtensionSupport( 'memcache' ) )
         {
@@ -57,7 +57,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
         {
             $this->markTestSkipped( 'PHP must be compiled with --with-zlib.' );
         }
-        
+
         $testMemcache = new Memcache();
         if ( @$testMemcache->connect( 'localhost', 11211 ) === false )
         {
@@ -88,7 +88,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
         $storage = new ezcCacheStorageMemcacheWrapper( $this->getTempDir(), $options );
         $storage->reset();
 
-        foreach ( $this->testData as $id => $dataArr ) 
+        foreach ( $this->testData as $id => $dataArr )
         {
             $storage->store( $id, $dataArr );
 
@@ -113,7 +113,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
         $storage = new ezcCacheStorageMemcacheWrapper( $this->getTempDir(), $options );
         $storage->reset();
 
-        foreach ( $this->testData as $id => $dataArr ) 
+        foreach ( $this->testData as $id => $dataArr )
         {
             $attributes = array(
                 'name'      => 'test',
@@ -291,7 +291,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
             '.ezcMetaData',
             $options->metaDataKey
         );
-        
+
         $this->assertTrue( isset( $options->host ) );
         $this->assertTrue( isset( $options->ttl ) );
         $this->assertTrue( isset( $options->port ) );
@@ -349,7 +349,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
             'metaDataKey',
             array( true, false, 42, -23, 42.23, array(), new stdClass(), '' )
         );
-        
+
         $this->assertSetProperty( $options, 'host', array( 'localhost', '192.168.0.14' ) );
         $this->assertSetProperty( $options, 'ttl', array( 1, 1000 ) );
         $this->assertSetProperty( $options, 'port', array( 1, 23 ) );
@@ -444,13 +444,13 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
 
         $storage->options = $storageMemcacheOptions;
         $this->assertEquals( $storageMemcacheOptions, $storage->getOptions() );
-        
+
         $storage->setOptions( $storageOptions );
         $this->assertEquals( $storageMemcacheOptions, $storage->getOptions() );
 
         $storage->options = $storageOptions;
         $this->assertEquals( $storageMemcacheOptions, $storage->getOptions() );
-        
+
         $storage->setOptions( $arrayOptions );
         $this->assertEquals( $storageMemcacheOptions, $storage->getOptions() );
 
@@ -473,7 +473,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
             );
         }
     }
-    
+
     public function testResetSuccess()
     {
         $storage = new ezcCacheStorageMemcacheWrapper(
@@ -482,14 +482,14 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
         );
         $storage->reset();
 
-        $data = array( 
+        $data = array(
             'ID',
             'Some/Dir/ID',
             'Some/other/Dir/ID/1',
             'Some/other/Dir/ID/2',
             'Some/other/Dir/ID/3',
         );
-        foreach ( $data as $id ) 
+        foreach ( $data as $id )
         {
             $storage->store( $id, $id );
         }
@@ -515,7 +515,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
         );
         $storage->reset();
 
-        $data = array( 
+        $data = array(
             'ID',
             'Some/Dir/ID',
             'Some/other/Dir/ID/1',
@@ -527,14 +527,14 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
             'lang' => 'en',
         );
 
-        foreach ( $data as $id ) 
+        foreach ( $data as $id )
         {
             $storage->store( $id, $id, $attributes );
         }
 
         // @TODO: Should be deleted by ID only, too.
         $deleted = $storage->delete( 'Some/other/Dir/ID/3', $attributes );
-        
+
         $this->assertEquals(
             array( 'Some/other/Dir/ID/3' ),
             $deleted,
@@ -544,7 +544,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
         $deleted = $storage->delete( null, $attributes, true );
 
         $this->assertEquals(
-            array( 
+            array(
                 'ID',
                 'Some/Dir/ID',
                 'Some/other/Dir/ID/1',
@@ -563,7 +563,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
         );
         $storage->reset();
 
-        $data = array( 
+        $data = array(
             'ID',
             'Some/Dir/ID',
             'Some/other/Dir/ID/1',
@@ -571,7 +571,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
             'Some/other/Dir/ID/3',
         );
 
-        foreach ( $data as $id ) 
+        foreach ( $data as $id )
         {
             $storage->store( $id, $id );
         }
@@ -596,7 +596,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
         );
         $storage->reset();
 
-        $data = array( 
+        $data = array(
             'ID',
             'Some/Dir/ID',
             'Some/other/Dir/ID/1',
@@ -604,7 +604,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
             'Some/other/Dir/ID/3',
         );
 
-        foreach ( $data as $id ) 
+        foreach ( $data as $id )
         {
             $storage->store( $id, $id );
         }
@@ -615,7 +615,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
         $purgedIds = $storage->purge( 3 );
 
         $this->assertEquals(
-            array( 
+            array(
                 'ID',
                 'Some/Dir/ID',
                 'Some/other/Dir/ID/1',
@@ -694,10 +694,10 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
             $opts
         );
         $secondStorage->reset();
-        
+
         $backend        = $this->readAttribute( $storage, 'backend' );
         $memcache       = $this->readAttribute( $backend, 'memcache' );
-        
+
         $lockKey = urlencode( $storage->getLocation() ) . '_'
             . $storage->options->lockKey;
 
@@ -791,7 +791,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
             $opts
         );
         $storage->reset();
-        
+
         $backend        = $this->readAttribute( $storage, 'backend' );
         $memcache       = $this->readAttribute( $backend, 'memcache' );
 
@@ -857,7 +857,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
             $opts
         );
         $storage->reset();
-        
+
         $backend        = $this->readAttribute( $storage, 'backend' );
         $memcache       = $this->readAttribute( $backend, 'memcache' );
 
@@ -884,7 +884,7 @@ class ezcCacheStorageMemcachePlainTest extends ezcCacheStorageTest
 
     public static function suite()
 	{
-        return new PHPUnit_Framework_TestSuite( __CLASS__ );
+        return new PHPUnit\Framework\TestSuite( __CLASS__ );
 	}
 }
 ?>

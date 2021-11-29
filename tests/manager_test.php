@@ -1,7 +1,7 @@
 <?php
 /**
- * ezcCacheManagerTest 
- * 
+ * ezcCacheManagerTest
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -9,9 +9,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -28,37 +28,37 @@
 require_once 'test_classes.php';
 
 /**
- * Test suite for ezcCacheManager class. 
- * 
+ * Test suite for ezcCacheManager class.
+ *
  * @package Cache
  * @subpackage Tests
  */
 class ezcCacheManagerTest extends ezcTestCase
 {
     /**
-     * data 
-     * 
+     * data
+     *
      * @var array
      * @access protected
      */
     protected $data = array();
-    
+
     /**
      * Temp location for caches.
-     * 
+     *
      * @var mixed
      */
     private $location;
 
     /**
-     * suite 
-     * 
+     * suite
+     *
      * @static
      * @access public
      */
     public static function suite()
     {
-        return new PHPUnit_Framework_TestSuite( "ezcCacheManagerTest" );
+        return new PHPUnit\Framework\TestSuite( "ezcCacheManagerTest" );
     }
 
     public function __construct()
@@ -74,7 +74,7 @@ class ezcCacheManagerTest extends ezcTestCase
 
     public function testManagerCreateCache_Success()
     {
-        foreach ( $this->data as $id => $class ) 
+        foreach ( $this->data as $id => $class )
         {
             $location = $this->createTempDir($class);
             ezcCacheManager::createCache( $id, $location, $class );
@@ -83,10 +83,10 @@ class ezcCacheManagerTest extends ezcTestCase
             {
                 $realCache = ezcCacheManager::getCache( $id );
                 $fakeCache = new $class( realpath( $location ) );
-                $this->assertEquals( 
+                $this->assertEquals(
                     $realCache,
-                    $fakeCache, 
-                    'Invalid object created from ezcCacheManager. Expected "' . get_class( $realCache )  . '", found "'. get_class( $fakeCache ) .'".'  
+                    $fakeCache,
+                    'Invalid object created from ezcCacheManager. Expected "' . get_class( $realCache )  . '", found "'. get_class( $fakeCache ) .'".'
                 );
                 unset( $realCache ); unset( $fakeCache );
             }
@@ -104,7 +104,7 @@ class ezcCacheManagerTest extends ezcTestCase
         $id = 0;
         // First try to create cache in invalid location.
         $caughtException = false;
-        try 
+        try
         {
             $cache = ezcCacheManager::createCache( $id, '/fckgw', $this->data[$id] );
             $this->fail('Exception not thrown on invalid location </fckgw>.');
@@ -116,11 +116,11 @@ class ezcCacheManagerTest extends ezcTestCase
                $e->getMessage()
             );
         }
-        
+
         // Second try, allocate a cache succesfully
         $location = $this->createTempDir($this->data[$id]);
         $cache = ezcCacheManager::createCache( $id, $location, $this->data[$id] );
-        
+
         // Use next cache class/location.
         $id++;
         $caughtException = false;
@@ -138,7 +138,7 @@ class ezcCacheManagerTest extends ezcTestCase
             $this->fail('Exception not thrown on used location <'.$location.'>.');
         }
         $this->removeTempDir($location);
-        
+
         // Use next cache class/location.
         $id++;
         $caughtException = false;

@@ -1,7 +1,7 @@
 <?php
 /**
- * ezcCacheMemcacheBackendTest 
- * 
+ * ezcCacheMemcacheBackendTest
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -9,9 +9,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -26,8 +26,8 @@
  */
 
 /**
- * Test suite for ezcCacheStorageMemcachePlain class. 
- * 
+ * Test suite for ezcCacheStorageMemcachePlain class.
+ *
  * @package Cache
  * @subpackage Tests
  */
@@ -36,11 +36,11 @@ class ezcCacheMemcacheBackendTest extends ezcTestCase
     protected $memcacheBackend;
 
     public static function suite()
-	{
-        return new PHPUnit_Framework_TestSuite( __CLASS__ );
-	}
+    {
+        return new \PHPUnit\Framework\TestSuite( __CLASS__ );
+    }
 
-    protected function setUp()
+    protected function setUp() : void
     {
         if ( !ezcBaseFeatures::hasExtensionSupport( 'memcache' ) )
         {
@@ -51,7 +51,7 @@ class ezcCacheMemcacheBackendTest extends ezcTestCase
         {
             $this->markTestSkipped( 'PHP must be compiled with --with-zlib.' );
         }
-        
+
         $testMemcache = new Memcache();
         if ( $testMemcache->connect( 'localhost', 11211 ) === false )
         {
@@ -62,7 +62,7 @@ class ezcCacheMemcacheBackendTest extends ezcTestCase
         $this->memcacheBackend = new ezcCacheMemcacheBackend();
     }
 
-    protected function tearDown()
+    protected function tearDown() : void
     {
         if ( $this->memcacheBackend )
         {
@@ -75,7 +75,7 @@ class ezcCacheMemcacheBackendTest extends ezcTestCase
     {
         return str_pad( '', ( ezcCacheMemcacheBackend::MAX_KEY_LENGTH + 1 ), 'a' );
     }
-    
+
     protected function getValidKey()
     {
         return str_pad( '', ezcCacheMemcacheBackend::MAX_KEY_LENGTH, 'a' );
@@ -161,7 +161,7 @@ class ezcCacheMemcacheBackendTest extends ezcTestCase
     public function testAcquireLockValidKey()
     {
         $key = $this->getValidKey();
-        
+
         $this->memcacheBackend->acquireLock( $key, 1000, 10000 );
     }
 

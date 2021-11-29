@@ -1,7 +1,7 @@
 <?php
 /**
- * ezcCacheStorageTest 
- * 
+ * ezcCacheStorageTest
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -9,9 +9,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -27,7 +27,7 @@
 
 /**;
  * Test suite for ezcStorageFile class.
- * 
+ *
  * @package Cache
  * @subpackage Tests
  */
@@ -84,16 +84,16 @@ class ezcCacheStorageFileTest extends ezcTestCase
     public function testCountDataItems()
     {
         $cache = new ezcCacheStorageFileArray( $this->createTempDir( 'ezcCacheStorageFileTest' ), array( 'extension' => '.c' ) );
-        $data = array( 
-            array( 
+        $data = array(
+            array(
                 'attributes' => array( 'lang' => 'en', 'section' => 'articles' ),
                 'content'    => array( 'lang' => 'en', 'section' => 'articles' ),
             ),
-            array( 
+            array(
                 'attributes' => array( 'lang' => 'de', 'section' => 'articles' ),
                 'content'    => array( 'lang' => 'de', 'section' => 'articles' ),
             ),
-            array( 
+            array(
                 'attributes' => array( 'lang' => 'no', 'section' => 'articles' ),
                 'content'    => array( 'lang' => 'no', 'section' => 'articles' ),
             )
@@ -113,10 +113,10 @@ class ezcCacheStorageFileTest extends ezcTestCase
     public function testFalseLifetime()
     {
         $cache = new ezcCacheStorageFileArray(
-            $this->createTempDir( 'ezcCacheStorageFileTest' ), 
+            $this->createTempDir( 'ezcCacheStorageFileTest' ),
             array( 'extension' => '.c', 'ttl' => false )
         );
-        $data = array( 
+        $data = array(
             'attributes' => array( 'lang' => 'en', 'section' => 'articles' ),
             'content'    => array( 'lang' => 'en', 'section' => 'articles' ),
         );
@@ -126,7 +126,7 @@ class ezcCacheStorageFileTest extends ezcTestCase
         $file = $cache->generateIdentifier( 0, $data['attributes'] );
         // Fake mtime and atime
         touch( $cache->getLocation() . '/' . $file, time() - 90000, time() - 90000 );
-        
+
         $this->assertNotEquals( false, $cache->restore( 0, $data['attributes'] ) );
 
         $this->removeTempDir();
@@ -136,16 +136,16 @@ class ezcCacheStorageFileTest extends ezcTestCase
     {
         $tempDir = $this->createTempDir( 'ezcCacheStorageFileTest' );
         $cache = new ezcCacheStorageFileArray( $tempDir, array( 'extension' => '.c' ) );
-        $data = array( 
-            "foo" => array( 
+        $data = array(
+            "foo" => array(
                 'attributes' => array( 'lang' => 'en', 'section' => 'articles' ),
                 'content'    => array( 'lang' => 'en', 'section' => 'articles' ),
             ),
-            "foo/bar" => array( 
+            "foo/bar" => array(
                 'attributes' => array( 'lang' => 'de', 'section' => 'articles' ),
                 'content'    => array( 'lang' => 'de', 'section' => 'articles' ),
             ),
-            "foo/baz" => array( 
+            "foo/baz" => array(
                 'attributes' => array( 'lang' => 'no', 'section' => 'articles' ),
                 'content'    => array( 'lang' => 'no', 'section' => 'articles' ),
             )
@@ -170,17 +170,17 @@ class ezcCacheStorageFileTest extends ezcTestCase
     public function testPermissions()
     {
         $cache = new ezcCacheStorageFileArray(
-            $this->createTempDir( 'ezcCacheStorageFileTest' ), 
+            $this->createTempDir( 'ezcCacheStorageFileTest' ),
             array( 'extension' => '.c', 'ttl' => false )
         );
-        $data = array( 
+        $data = array(
             'attributes' => array( 'lang' => 'en', 'section' => 'articles' ),
             'content'    => array( 'lang' => 'en', 'section' => 'articles' ),
         );
 
         $cache->store( 0, $data['attributes'], $data['content'] );
         $file = $cache->getLocation() . "/" . $cache->generateIdentifier( 0, $data['attributes'] );
-        
+
         $this->assertEquals( 0644, ( fileperms( $file ) & 0777 ) );
 
         $cache->options->permissions = 0777;
@@ -189,20 +189,20 @@ class ezcCacheStorageFileTest extends ezcTestCase
         $file = $cache->getLocation() . "/" . $cache->generateIdentifier( 1, $data['attributes'] );
 
         $this->assertEquals( 0777,  ( fileperms( $file ) & 0777 ) );
-        
+
         $this->removeTempDir();
     }
 
     public function testRestoreWithoutSearch()
     {
         $cache = new ezcCacheStorageFileArray(
-            $this->createTempDir( 'ezcCacheStorageFileTest' ), 
+            $this->createTempDir( 'ezcCacheStorageFileTest' ),
             array( 'extension' => '.c', 'ttl' => false )
         );
 
         $id = "test";
         $keys = array( 10000, 1, 10, 100, 1000 );
-        
+
         // Store
         foreach ( $keys as $key )
         {
@@ -224,7 +224,7 @@ class ezcCacheStorageFileTest extends ezcTestCase
 
         $this->removeTempDir();
     }
-    
+
     public function testCreateCacheFailUnreadable()
     {
         $temp = $this->createTempDir( __CLASS__ );
@@ -266,8 +266,8 @@ class ezcCacheStorageFileTest extends ezcTestCase
     }
 
     /**
-     * testStoreRestoreNotoutdatedWithoutAttributes 
-     * 
+     * testStoreRestoreNotoutdatedWithoutAttributes
+     *
      * @access public
      */
     public function testStoreRestoreNotoutdatedWithoutAttributes()
@@ -275,14 +275,14 @@ class ezcCacheStorageFileTest extends ezcTestCase
         // Test with 10 seconds lifetime
         $temp = $this->createTempDir( __CLASS__ );
         $storage = new ezcCacheStorageFilePlain( $temp, array( 'ttl' => 10 ) );
-        foreach ( $this->data as $id => $dataArr ) 
+        foreach ( $this->data as $id => $dataArr )
         {
             $filename = $storage->getLocation() . $storage->generateIdentifier( $id );
 
             $storage->store( $id, $dataArr );
             // Faking the m/a-time to be 5 seconds in the past
             touch( $filename, ( time()  - 5 ), ( time()  - 5 ) );
-            
+
             $data = $storage->restore( $id );
             $this->assertEquals(
                 $dataArr,
@@ -294,8 +294,8 @@ class ezcCacheStorageFileTest extends ezcTestCase
     }
 
     /**
-     * testStoreRestoreNotoutdatedWithAttributes 
-     * 
+     * testStoreRestoreNotoutdatedWithAttributes
+     *
      * @access public
      */
     public function testStoreRestoreNotoutdatedWithAttributes()
@@ -303,28 +303,28 @@ class ezcCacheStorageFileTest extends ezcTestCase
         // Test with 10 seconds lifetime
         $temp = $this->createTempDir( __CLASS__ );
         $storage = new ezcCacheStorageFilePlain( $temp, array( 'ttl' => 10 ) );
-        
+
         $dataArr = array(
             '1',
             '2',
             '3',
         );
-        
-        foreach ( $dataArr as $id => $data ) 
+
+        foreach ( $dataArr as $id => $data )
         {
             $attributes = array(
                 'name'      => 'test',
                 'title'     => 'Test item',
                 'date'      => time() . $id,
             );
-            
+
             $filename = $storage->getLocation() . $storage->generateIdentifier( $id, $attributes );
-            
+
             $storage->store( $id, $data, $attributes );
 
             // Faking the m/a-time to be 5 seconds in the past
             touch( $filename, ( time() - 5 ), ( time() - 5 ) );
-            
+
             $restoredData = $storage->restore( $id, $attributes );
 
             $this->assertEquals(
@@ -342,16 +342,16 @@ class ezcCacheStorageFileTest extends ezcTestCase
         $temp = $this->createTempDir( __CLASS__ );
         $storage = new ezcCacheStorageFilePlain( $temp, array( 'ttl' => 30 ) );
 
-        $dataArr = array( 
+        $dataArr = array(
             '0',
             '1',
             '2',
         );
-        
-        foreach ( $dataArr as $id => $data ) 
+
+        foreach ( $dataArr as $id => $data )
         {
             $filename = $storage->getLocation() . $storage->generateIdentifier( $id );
-            
+
             $storage->store( $id, $data );
 
             // Faking the m/a-time to be 60 seconds in the past
@@ -384,17 +384,17 @@ class ezcCacheStorageFileTest extends ezcTestCase
         $temp = $this->createTempDir( __CLASS__ );
         $storage = new ezcCacheStorageFilePlain( $temp, array( 'ttl' => 30 ) );
 
-        $outdatedData = array( 
+        $outdatedData = array(
             'ID',
             'Some/Dir/ID',
             'Some/other/Dir/ID/1',
             'Some/other/Dir/ID/2',
             'Some/other/Dir/ID/3',
         );
-        foreach ( $outdatedData as $id ) 
+        foreach ( $outdatedData as $id )
         {
             $filename = $storage->getLocation() . $storage->generateIdentifier( $id );
-            
+
             $storage->store( $id, $id );
 
             // Faking the m/a-time to be 60 seconds in the past
@@ -408,7 +408,7 @@ class ezcCacheStorageFileTest extends ezcTestCase
             'Some/other/Dir/ID/5',
             'Some/other/Dir/ID/6',
         );
-        foreach ( $data as $id ) 
+        foreach ( $data as $id )
         {
             $storage->store( $id, $id );
         }
@@ -440,16 +440,16 @@ class ezcCacheStorageFileTest extends ezcTestCase
         $temp = $this->createTempDir( __CLASS__ );
         $storage = new ezcCacheStorageFilePlain( $temp, array( 'ttl' => 30 ) );
 
-        $dataArr = array( 
+        $dataArr = array(
             '0',
             '1',
             '2',
         );
-        
-        foreach ( $dataArr as $id => $data ) 
+
+        foreach ( $dataArr as $id => $data )
         {
             $filename = $storage->getLocation() . $storage->generateIdentifier( $id );
-            
+
             $storage->store( $id, $data );
 
             // Faking the m/a-time to be 60 seconds in the past
@@ -482,17 +482,17 @@ class ezcCacheStorageFileTest extends ezcTestCase
         $temp = $this->createTempDir( __CLASS__ );
         $storage = new ezcCacheStorageFilePlain( $temp, array( 'ttl' => 30 ) );
 
-        $outdatedData = array( 
+        $outdatedData = array(
             'ID',
             'Some/Dir/ID',
             'Some/other/Dir/ID/1',
             'Some/other/Dir/ID/2',
             'Some/other/Dir/ID/3',
         );
-        foreach ( $outdatedData as $id ) 
+        foreach ( $outdatedData as $id )
         {
             $filename = $storage->getLocation() . $storage->generateIdentifier( $id );
-            
+
             $storage->store( $id, $id );
 
             // Faking the m/a-time to be 60 seconds in the past
@@ -506,7 +506,7 @@ class ezcCacheStorageFileTest extends ezcTestCase
             'Some/other/Dir/ID/5',
             'Some/other/Dir/ID/6',
         );
-        foreach ( $data as $id ) 
+        foreach ( $data as $id )
         {
             $storage->store( $id, $id );
         }
@@ -519,7 +519,7 @@ class ezcCacheStorageFileTest extends ezcTestCase
         $purged = $storage->purge( 3 );
 
         $this->assertEquals(
-            array( 
+            array(
                 'ID',
                 'Some/Dir/ID',
                 'Some/other/Dir/ID/1',
@@ -541,14 +541,14 @@ class ezcCacheStorageFileTest extends ezcTestCase
         $temp = $this->createTempDir( __CLASS__ );
         $storage = new ezcCacheStorageFilePlain( $temp, array( 'ttl' => 30 ) );
 
-        $data = array( 
+        $data = array(
             'ID',
             'Some/Dir/ID',
             'Some/other/Dir/ID/1',
             'Some/other/Dir/ID/2',
             'Some/other/Dir/ID/3',
         );
-        foreach ( $data as $id ) 
+        foreach ( $data as $id )
         {
             $storage->store( $id, $id );
         }
@@ -573,14 +573,14 @@ class ezcCacheStorageFileTest extends ezcTestCase
         $temp = $this->createTempDir( __CLASS__ );
         $storage = new ezcCacheStorageFilePlain( $temp, array( 'ttl' => 30 ) );
 
-        $data = array( 
+        $data = array(
             'ID',
             'Some/Dir/ID',
             'Some/other/Dir/ID/1',
             'Some/other/Dir/ID/2',
             'Some/other/Dir/ID/3',
         );
-        foreach ( $data as $id ) 
+        foreach ( $data as $id )
         {
             $storage->store( $id, $id );
         }
@@ -598,7 +598,7 @@ class ezcCacheStorageFileTest extends ezcTestCase
             $storage->reset();
             $this->fail( 'Exception not thrown on non-successful delete.' );
         }
-        catch ( ezcBaseFilePermissionException $e ) 
+        catch ( ezcBaseFilePermissionException $e )
         {
             self::assertEquals( "The file '$temp/ID-.cache' can not be removed. (Could not unlink cache file.)", $e->getMessage() );
         }
@@ -784,7 +784,7 @@ class ezcCacheStorageFileTest extends ezcTestCase
 
     public static function suite()
     {
-         return new PHPUnit_Framework_TestSuite( "ezcCacheStorageFileTest" );
+         return new PHPUnit\Framework\TestSuite( "ezcCacheStorageFileTest" );
     }
 }
 ?>

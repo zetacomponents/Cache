@@ -9,9 +9,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -27,7 +27,7 @@
 
 /**
  * Abstract base class for meta data tests.
- * 
+ *
  * @package Cache
  * @version //autogen//
  * @subpackage Test
@@ -38,7 +38,7 @@ abstract class ezcCacheStackBaseMetaDataTest extends ezcTestCase
 
     public static function suite()
 	{
-		return new PHPUnit_Framework_TestSuite( __CLASS__ );
+		return new PHPUnitFrameworkTestSuite( __CLASS__ );
 	}
 
     public function testCtor()
@@ -280,22 +280,22 @@ abstract class ezcCacheStackBaseMetaDataTest extends ezcTestCase
                 )
             )
         );
-        
+
         // Known item in known storage
         $this->assertTrue(
             $meta->hasItem( 'storage_id_1', 'item_id_1' )
         );
-        
+
         // Known item in unknown storage
         $this->assertFalse(
             $meta->hasItem( 'storage_id_3', 'item_id_1' )
         );
-        
+
         // Unknown item in known storage
         $this->assertFalse(
             $meta->hasItem( 'storage_id_1', 'item_id_2' )
         );
-        
+
         // Unknown item in unknown storage
         $this->assertFalse(
             $meta->hasItem( 'storage_id_3', 'item_id_3' )
@@ -368,7 +368,7 @@ abstract class ezcCacheStackBaseMetaDataTest extends ezcTestCase
             'item_id_4' => 5,
             'item_id_3' => 8,
         );
-        
+
         // Returned array correctly sorted
         $this->assertEquals(
             $sorted,
@@ -406,7 +406,7 @@ abstract class ezcCacheStackBaseMetaDataTest extends ezcTestCase
             $data
         );
         $returnedData = $meta->getState();
-        
+
         $this->assertEquals(
             $data['replacementData'],
             $returnedData['replacementData']
@@ -440,7 +440,7 @@ abstract class ezcCacheStackBaseMetaDataTest extends ezcTestCase
         $meta->setState(
             $data
         );
-        
+
         $this->assertAttributeEquals(
             $data['replacementData'],
             'replacementData',
