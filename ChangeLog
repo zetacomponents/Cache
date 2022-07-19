@@ -1,3 +1,10 @@
+1.6.2 - Tuesday 19 July 2022
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Fixed array_merge() error in test because parent constructor was not called
+- Fixed a broken test where data was not present
+
+
 1.6.1 - Monday 29 November 2021
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
