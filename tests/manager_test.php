@@ -41,7 +41,7 @@ class ezcCacheManagerTest extends ezcTestCase
      * @var array
      * @access protected
      */
-    protected $data = array();
+    protected $backendTestClasses = array();
 
     /**
      * Temp location for caches.
@@ -63,18 +63,19 @@ class ezcCacheManagerTest extends ezcTestCase
 
     public function __construct()
     {
-        $this->data = array(
+        $this->backendTestClasses = array(
                         'ezcCacheStorageFilePlain',
                         'ezcCacheStorageFileArray',
                         'ezcCacheStorageFileEvalArray',
                         'ezcCacheStorageApcPlain',
                         'ezcCacheStorageFileApcArray'
                         );
+        parent::__construct();
     }
 
     public function testManagerCreateCache_Success()
     {
-        foreach ( $this->data as $id => $class )
+        foreach ( $this->backendTestClasses as $id => $class )
         {
             $location = $this->createTempDir($class);
             ezcCacheManager::createCache( $id, $location, $class );
@@ -106,7 +107,7 @@ class ezcCacheManagerTest extends ezcTestCase
         $caughtException = false;
         try
         {
-            $cache = ezcCacheManager::createCache( $id, '/fckgw', $this->data[$id] );
+            $cache = ezcCacheManager::createCache( $id, '/fckgw', $this->backendTestClasses[$id] );
             $this->fail('Exception not thrown on invalid location </fckgw>.');
         }
         catch ( ezcBaseFileNotFoundException $e )
@@ -118,8 +119,8 @@ class ezcCacheManagerTest extends ezcTestCase
         }
 
         // Second try, allocate a cache succesfully
-        $location = $this->createTempDir($this->data[$id]);
-        $cache = ezcCacheManager::createCache( $id, $location, $this->data[$id] );
+        $location = $this->createTempDir($this->backendTestClasses[$id]);
+        $cache = ezcCacheManager::createCache( $id, $location, $this->backendTestClasses[$id] );
 
         // Use next cache class/location.
         $id++;
@@ -127,7 +128,7 @@ class ezcCacheManagerTest extends ezcTestCase
         try
         {
             // Use current ID with last IDs location
-            ezcCacheManager::createCache( $id, $location, $this->data[$id]  );
+            ezcCacheManager::createCache( $id, $location, $this->backendTestClasses[$id]  );
         }
         catch ( ezcCacheUsedLocationException $e )
         {
@@ -142,7 +143,7 @@ class ezcCacheManagerTest extends ezcTestCase
         // Use next cache class/location.
         $id++;
         $caughtException = false;
-        $location = $this->createTempDir($this->data[$id]);
+        $location = $this->createTempDir($this->backendTestClasses[$id]);
         try
         {
             // Use current ID with non-existant cache class
