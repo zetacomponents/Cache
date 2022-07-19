@@ -275,7 +275,14 @@ class ezcCacheStorageFileTest extends ezcTestCase
         // Test with 10 seconds lifetime
         $temp = $this->createTempDir( __CLASS__ );
         $storage = new ezcCacheStorageFilePlain( $temp, array( 'ttl' => 10 ) );
-        foreach ( $this->data as $id => $dataArr )
+
+        $dataArr = array(
+            '1',
+            '2',
+            '3',
+        );
+
+        foreach ( $dataArr as $id => $dataArr )
         {
             $filename = $storage->getLocation() . $storage->generateIdentifier( $id );
 
