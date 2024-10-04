@@ -9,9 +9,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -132,7 +132,7 @@
  * might be seriously broken which will result in undefined behaviour of the
  * stack. Changing the replacement strategy will most possibly result in an
  * {@link ezcCacheInvalidMetaDataException}.
- * 
+ *
  * @property ezcCacheStackOptions $options
  *           Options for the cache stack.
  * @property string $location
@@ -144,8 +144,8 @@
 class ezcCacheStack extends ezcCacheStorage
 {
     /**
-     * Stack of storages. 
-     * 
+     * Stack of storages.
+     *
      * @var array(int=>ezcCacheStackableStorage)
      */
     private $storageStack = array();
@@ -155,7 +155,7 @@ class ezcCacheStack extends ezcCacheStorage
      *
      * Mainly used to validate an ID is not taken twice and a storage is not
      * added twice.
-     * 
+     *
      * @var array(string=>ezcCacheStackableStorage)
      */
     private $storageIdMap = array();
@@ -176,11 +176,11 @@ class ezcCacheStack extends ezcCacheStorage
      * The location can be a free form string that identifies the stack
      * uniquely in the {@link ezcCacheManager}. It is currently not used
      * internally in the stack.
-     * 
-     * @param string $location 
-     * @param ezcCacheStackOptions $options 
+     *
+     * @param string $location
+     * @param ezcCacheStackOptions $options
      */
-    public function __construct( $location, ezcCacheStackOptions $options = null )
+    public function __construct( $location, ?ezcCacheStackOptions $options = null )
     {
         if ( $options === null )
         {
@@ -216,15 +216,15 @@ class ezcCacheStack extends ezcCacheStorage
      * The $attributes array is optional and can be used to describe the stack
      * further.
      *
-     * @param string $id 
-     * @param mixed $data 
-     * @param array $attributes 
+     * @param string $id
+     * @param mixed $data
+     * @param array $attributes
      */
     public function store( $id, $data, $attributes = array() )
     {
         $metaStorage = $this->getMetaDataStorage();
         $metaStorage->lock();
-        
+
         $metaData = $this->getMetaData( $metaStorage );
 
         foreach( $this->storageStack as $storageConf )
@@ -251,14 +251,14 @@ class ezcCacheStack extends ezcCacheStorage
      *
      * Returns the meta data to use with the configured {@link
      * ezcCacheStackStackReplacementStrategy}.
-     * 
-     * @param ezcCacheStackMetaDataStorage $metaStorage 
+     *
+     * @param ezcCacheStackMetaDataStorage $metaStorage
      * @return ezcCacheMetaData
      */
     private function getMetaData( ezcCacheStackMetaDataStorage $metaStorage )
     {
         $metaData = $metaStorage->restoreMetaData();
-        
+
         if ( $metaData === null )
         {
             $metaData = call_user_func(
@@ -284,10 +284,10 @@ class ezcCacheStack extends ezcCacheStorage
      * their content for the given attribute combination and will restore the
      * first item found. However, this process is much slower then restoring
      * with an ID and therefore is not recommended.
-     * 
-     * @param string $id 
-     * @param array $attributes 
-     * @param bool $search 
+     *
+     * @param string $id
+     * @param array $attributes
+     * @param bool $search
      * @return mixed The restored data or false on failure.
      */
     public function restore( $id, $attributes = array(), $search = false )
@@ -329,12 +329,12 @@ class ezcCacheStack extends ezcCacheStorage
     }
 
     /**
-     * Bubbles a restored $item up to all storages above $foundStorageConf. 
-     * 
-     * @param string $id 
-     * @param array $attributes 
-     * @param mixed $item 
-     * @param ezcCacheStackStorageConfiguration $foundStorageConf 
+     * Bubbles a restored $item up to all storages above $foundStorageConf.
+     *
+     * @param string $id
+     * @param array $attributes
+     * @param mixed $item
+     * @param ezcCacheStackStorageConfiguration $foundStorageConf
      * @param ezcCacheStackMetaData $metaData
      */
     private function bubbleUp( $id, array $attributes, $item, ezcCacheStackStorageConfiguration $foundStorageConf, ezcCacheStackMetaData $metaData )
@@ -379,10 +379,10 @@ class ezcCacheStack extends ezcCacheStorage
      * data.
      *
      * The method returns an array containing all deleted item IDs.
-     * 
-     * @param string $id 
-     * @param array $attributes 
-     * @param bool $search 
+     *
+     * @param string $id
+     * @param array $attributes
+     * @param bool $search
      * @return array(string)
      */
     public function delete( $id = null, $attributes = array(), $search = false )
@@ -449,9 +449,9 @@ class ezcCacheStack extends ezcCacheStorage
      * This method counts how many data items fulfilling the given criteria are
      * stored overall. Note: The items of all contained storages are counted
      * independantly and summarized.
-     * 
-     * @param string $id 
-     * @param array $attributes 
+     *
+     * @param string $id
+     * @param array $attributes
      * @return int
      */
     public function countDataItems( $id = null, $attributes = array() )
@@ -474,9 +474,9 @@ class ezcCacheStack extends ezcCacheStorage
      * The first internal storage that is found for the data item is chosen to
      * detemine the lifetime. If no storage contains the item or the item is
      * outdated in all found caches, 0 is returned.
-     * 
-     * @param string $id 
-     * @param array $attributes 
+     *
+     * @param string $id
+     * @param array $attributes
      * @return int
      */
     public function getRemainingLifetime( $id, $attributes = array() )
@@ -509,7 +509,7 @@ class ezcCacheStack extends ezcCacheStorage
      * ezcCacheStackStackReplacementStrategy} of the stack, when the storage
      * runs full.
      *
-     * @param ezcCacheStackStorageConfiguration $storageConf 
+     * @param ezcCacheStackStorageConfiguration $storageConf
      */
     public function pushStorage( ezcCacheStackStorageConfiguration $storageConf )
     {
@@ -558,7 +558,7 @@ class ezcCacheStack extends ezcCacheStorage
      * Returns the number of storages on the stack.
      *
      * Returns the number of storages currently on the stack.
-     * 
+     *
      * @return int
      */
     public function countStorages()
@@ -575,7 +575,7 @@ class ezcCacheStack extends ezcCacheStorage
      * perform any drastical changes to the configurations. Performing manual
      * stores, restores and deletes on the storages is *highly discouraged*,
      * since it may lead to irrepairable inconsistencies of the stack.
-     * 
+     *
      * @return array(ezcCacheStackableStorage)
      */
     public function getStorages()
@@ -592,7 +592,7 @@ class ezcCacheStack extends ezcCacheStorage
      * kill the complete meta data.
      *
      * The stack is in a consistent, but empty, state afterwards.
-     * 
+     *
      * @return void
      */
     public function reset()
@@ -607,7 +607,7 @@ class ezcCacheStack extends ezcCacheStorage
      * Validates the $location parameter of the constructor.
      *
      * Returns true, since $location is not necessary for this storage.
-     * 
+     *
      * @return bool
      */
     protected function validateLocation()
@@ -621,8 +621,8 @@ class ezcCacheStack extends ezcCacheStorage
      *
      * Overwrites the parent implementation to only allow instances of {@link
      * ezcCacheStackOptions}.
-     * 
-     * @param ezcCacheStackOptions $options 
+     *
+     * @param ezcCacheStackOptions $options
      *
      * @apichange Use $stack->options instead.
      */
@@ -631,21 +631,21 @@ class ezcCacheStack extends ezcCacheStorage
         // Overloading
         $this->options = $options;
     }
-    
+
     /**
      * Property write access.
-     * 
+     *
      * @param string $propertyName Name of the property.
      * @param mixed $propertyValue  The value for the property.
      *
-     * @throws ezcBaseValueException 
-     *         If the value for the property options is not an instance of 
-     *         ezcCacheStackOptions. 
+     * @throws ezcBaseValueException
+     *         If the value for the property options is not an instance of
+     *         ezcCacheStackOptions.
      * @ignore
      */
     public function __set( $propertyName, $propertyValue )
     {
-        switch ( $propertyName ) 
+        switch ( $propertyName )
         {
             case 'options':
                 if ( !( $propertyValue instanceof ezcCacheStackOptions ) )
