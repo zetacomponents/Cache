@@ -671,7 +671,27 @@ abstract class ezcCacheStorageFile extends ezcCacheStorage implements ezcCacheSt
         {
             $filename .= '-';
         }
-        return $filename . $this->properties['options']['extension'];
+        $identifier = $filename . $this->properties['options']['extension'];
+
+        // Path traversal guard: ensure the resolved path stays within the
+        // configured cache location directory.
+        $baseDir  = realpath( rtrim( $this->properties['location'], DIRECTORY_SEPARATOR ) );
+        $fullPath = $baseDir . DIRECTORY_SEPARATOR . $identifier;
+        // Use dirname() because the file may not exist yet; we check the directory.
+        $resolvedDir = realpath( dirname( $fullPath ) );
+        if ( $baseDir === false || $resolvedDir === false ||
+             strncmp( $resolvedDir . DIRECTORY_SEPARATOR,
+                      $baseDir   . DIRECTORY_SEPARATOR,
+                      strlen( $baseDir ) + 1 ) !== 0 )
+        {
+            throw new ezcBaseValueException(
+                'id',
+                $id,
+                'a cache ID that resolves within the cache location directory'
+            );
+        }
+
+        return $identifier;
     }
 
     /**
