@@ -63,16 +63,15 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         5 => "Test 1 2 3 4 5 6 7 8\\\\",
         6 => 'La la la 02064 lololo',
         7 => true,
-        // 8 => false, // 6 tests fail with this
         9 => 12345,
        10 => 12.3746,
     );
 
     protected function setUp() : void
     {
-        if ( !ezcBaseFeatures::hasExtensionSupport( 'apc' ) )
+        if ( !ezcBaseFeatures::hasExtensionSupport( 'apcu' ) )
         {
-            $this->markTestSkipped( "PHP must have APC support." );
+            $this->markTestSkipped( "PHP must have APCu support." );
         }
 
         // Class name == <inheriting class> - "Test"
@@ -546,7 +545,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
             . $storage->options->lockKey;
 
         $this->assertFalse(
-            apc_fetch( $lockKey ),
+            apcu_fetch( $lockKey ),
             'Lock key exists.'
         );
 
@@ -559,7 +558,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
 
         $this->assertNotEquals(
             false,
-            apc_fetch( $lockKey ),
+            apcu_fetch( $lockKey ),
             'Lock key not created correctly.'
         );
 
@@ -571,7 +570,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         $storage->unlock();
 
         $this->assertFalse(
-            apc_fetch( $lockKey ),
+            apcu_fetch( $lockKey ),
             'Lock key exists.'
         );
 
@@ -606,7 +605,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
 
         // Assert initial state
         $this->assertFalse(
-            apc_fetch( $lockKey ),
+            apcu_fetch( $lockKey ),
             'Lock key exists.'
         );
         $this->assertFalse(
@@ -625,7 +624,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         // Assert locked state
         $this->assertNotEquals(
             false,
-            ( $oldLock = apc_fetch( $lockKey ) ),
+            ( $oldLock = apcu_fetch( $lockKey ) ),
             'Lock key not created correctly.'
         );
         $this->assertTrue(
@@ -650,13 +649,13 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         // Assert that lock key exists again
         $this->assertNotEquals(
             false,
-            apc_fetch( $lockKey ),
+            apcu_fetch( $lockKey ),
             'Lock key not created correctly.'
         );
         // Assert that the new lock is not the same as the old one
         $this->assertGreaterThan(
             $oldLock,
-            apc_fetch( $lockKey ),
+            apcu_fetch( $lockKey ),
             'Lock key not created correctly.'
         );
         // First storage does not note that its lock disappeared
@@ -673,7 +672,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         $secondStorage->unlock();
 
         $this->assertFalse(
-            apc_fetch( $lockKey ),
+            apcu_fetch( $lockKey ),
             'Lock key not created correctly.'
         );
         // First storage does not note that its lock disappeared and was not unlocked
@@ -721,7 +720,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         );
 
         $this->assertFalse(
-            apc_fetch( $metaDataKey ),
+            apcu_fetch( $metaDataKey ),
             'Meta data key existed before the storage was created.'
         );
 
@@ -729,7 +728,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
 
         $this->assertEquals(
             $meta,
-            apc_fetch( $metaDataKey )->var,
+            apcu_fetch( $metaDataKey )->var,
             'Meta data file existed before the storage was created.'
         );
 
@@ -743,7 +742,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
 
         $this->assertEquals(
             $meta,
-            apc_fetch( $metaDataKey )->var,
+            apcu_fetch( $metaDataKey )->var,
             'Meta data file existed before the storage was created.'
         );
 
@@ -762,7 +761,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
             . $storage->options->metaDataKey;
 
         $this->assertFalse(
-            apc_fetch( $metaDataKey ),
+            apcu_fetch( $metaDataKey ),
             'Meta data file existed before the storage was created.'
         );
 
@@ -774,7 +773,7 @@ class ezcCacheStorageFileApcArrayTest extends ezcCacheStorageTest
         );
 
         $this->assertFalse(
-            apc_fetch( $metaDataKey ),
+            apcu_fetch( $metaDataKey ),
             'Meta data file existed before the storage was created.'
         );
 
