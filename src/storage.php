@@ -46,6 +46,7 @@
  *
  * - {@link ezcCacheStorageFileArray}
  * - {@link ezcCacheStorageFileEvalArray}
+ * - {@link ezcCacheStorageFileJsonArray}
  * - {@link ezcCacheStorageFilePlain}
  *
  * Implementations of {@link ezcCacheStorageMemory}:

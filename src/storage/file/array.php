@@ -52,6 +52,7 @@
  * {@link ezcCacheStorageFile}. As there are:
  *
  * - ezcCacheStorageFileEvalArray
+ * - ezcCacheStorageFileJsonArray
  * - ezcCacheStorageFilePlain
  * 
  * @package Cache
