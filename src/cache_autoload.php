@@ -69,6 +69,7 @@ return array(
     'ezcCacheStorageFileApcArrayOptions'     => 'Cache/options/storage_apc_array.php',
     'ezcCacheStorageFileArray'               => 'Cache/storage/file/array.php',
     'ezcCacheStorageFileEvalArray'           => 'Cache/storage/file/eval_array.php',
+    'ezcCacheStorageFileJsonArray'           => 'Cache/storage/file/json_array.php',
     'ezcCacheStorageFileObject'              => 'Cache/storage/file/object.php',
     'ezcCacheStorageFileOptions'             => 'Cache/options/storage_file.php',
     'ezcCacheStorageFilePlain'               => 'Cache/storage/file/plain.php',
