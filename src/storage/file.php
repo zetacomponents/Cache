@@ -43,6 +43,7 @@
  *
  * - ezcCacheStorageFileArray
  * - ezcCacheStorageFileEvalArray
+ * - ezcCacheStorageFileJsonArray
  * - ezcCacheStorageFilePlain
  *
  * @package Cache

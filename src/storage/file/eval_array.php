@@ -50,8 +50,13 @@
  * {@link ezcCacheStorageFile}. As there are:
  *
  * - ezcCacheStorageFileArray
+ * - ezcCacheStorageFileJsonArray
  * - ezcCacheStorageFilePlain
  * 
+ * @deprecated Restoring data with eval() runs whatever PHP code a cache file
+ *             contains. Use {@link ezcCacheStorageFileJsonArray} instead,
+ *             which stores arrays and scalar values as JSON.
+ *
  * @package Cache
  * @version //autogentag//
  */

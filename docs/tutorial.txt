@@ -52,6 +52,12 @@ ezcCacheStorageFileEvalArray
   require() to restore the cached data. As a result,
   the stored data will not be cached again in PHP accelerators like APC_.
   This might be desirable if you store large amounts of data at once.
+  This class is deprecated; use ezcCacheStorageFileJsonArray instead.
+
+ezcCacheStorageFileJsonArray
+  Objects of this storage class store array structures and scalar values as
+  JSON. Restoring data from the cache uses json_decode(), so a cache file is
+  never executed as PHP code. Strings must be valid UTF-8.
 
 ezcCacheStorageMemcachePlain
   Uses the PHP Memcache_ extension to store cache objects in memory between
