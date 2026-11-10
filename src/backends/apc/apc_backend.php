@@ -26,7 +26,7 @@
  */
 
 /**
- * This backend stores data in an APC cache.
+ * This backend stores data in an APCu cache.
  *
  * @apichange This class will be deprecated in the next major version of the
  *            Cache component. Please do not use it directly, but use {@link
@@ -41,13 +41,13 @@ class ezcCacheApcBackend extends ezcCacheMemoryBackend
      * Constructs a new ezcCacheApcBackend object.
      *
      * @throws ezcBaseExtensionNotFoundException
-     *         If the PHP apc extension is not installed.
+     *         If the PHP apcu extension is not installed.
      */
     public function __construct()
     {
-        if ( !ezcBaseFeatures::hasExtensionSupport( 'apc' ) )
+        if ( !ezcBaseFeatures::hasExtensionSupport( 'apcu' ) )
         {
-            throw new ezcBaseExtensionNotFoundException( 'apc', null, "PHP does not have APC support." );
+            throw new ezcBaseExtensionNotFoundException( 'apcu', null, "PHP does not have APCu support." );
         }
     }
 
@@ -63,7 +63,7 @@ class ezcCacheApcBackend extends ezcCacheMemoryBackend
     public function store( $key, $var, $ttl = 0 )
     {
         $data = new ezcCacheMemoryVarStruct( $key, $var, $ttl );
-        return apc_store( $key, $data, $ttl );
+        return apcu_store( $key, $data, $ttl );
     }
 
     /**
@@ -74,7 +74,7 @@ class ezcCacheApcBackend extends ezcCacheMemoryBackend
      */
     public function fetch( $key )
     {
-        $data = apc_fetch( $key );
+        $data = apcu_fetch( $key );
         return ( is_object( $data ) ) ? $data->var : false;
     }
 
@@ -87,7 +87,7 @@ class ezcCacheApcBackend extends ezcCacheMemoryBackend
      */
     public function delete( $key )
     {
-        return apc_delete( $key );
+        return apcu_delete( $key );
     }
 
     /**
@@ -102,7 +102,7 @@ class ezcCacheApcBackend extends ezcCacheMemoryBackend
     public function reset()
     {
         // Kills the whole user cache
-        apc_clear_cache( "user" );
+        apcu_clear_cache();
     }
 
     /**
@@ -117,15 +117,15 @@ class ezcCacheApcBackend extends ezcCacheMemoryBackend
         $counter = 0;
         // add() does not replace and returns true on success. $maxTime is
         // obeyed by Memcache expiry.
-        while ( apc_add( $key, time(), $maxTime ) === false )
+        while ( apcu_add( $key, time(), $maxTime ) === false )
         {
             // Wait for next check
             usleep( $waitTime );
             // Don't check expiry time too frquently, since it requires restoring
-            if ( ( ++$counter % 10 === 0 ) && ( time() - (int)apc_fetch( $key ) > $maxTime ) )
+            if ( ( ++$counter % 10 === 0 ) && ( time() - (int)apcu_fetch( $key ) > $maxTime ) )
             {
                 // Release expired lock and place own lock
-                apc_store( $key, time(), $maxTime );
+                apcu_store( $key, time(), $maxTime );
                 break;
             }
         }
@@ -139,7 +139,7 @@ class ezcCacheApcBackend extends ezcCacheMemoryBackend
      */
     public function releaseLock( $key )
     {
-        apc_delete( $key );
+        apcu_delete( $key );
     }
 }
 ?>
