@@ -68,6 +68,32 @@ class ezcCacheStorageFileTest extends ezcTestCase
         $this->assertEquals( '1-baz=bam-foo=bar.c', $id );
     }
 
+    public function testGenerateIdentifierRefusesParentDirectorySegments()
+    {
+        $obj = new ezcCacheStorageFileArray( $this->createTempDir( __CLASS__ ) );
+        $refused = 0;
+        foreach ( array( '../outside', 'sub/../../outside', 'sub\..\..\outside', '..' ) as $id )
+        {
+            try
+            {
+                $obj->generateIdentifier( $id );
+                $this->fail( "Expected exception was not thrown for ID '$id'." );
+            }
+            catch ( ezcBaseValueException $e )
+            {
+                $refused++;
+            }
+        }
+        $this->assertEquals( 4, $refused );
+    }
+
+    public function testGenerateIdentifierAllowsDotsInsideNames()
+    {
+        $obj = new ezcCacheStorageFileArray( $this->createTempDir( __CLASS__ ) );
+        $id = $obj->generateIdentifier( 'not/a..parent/..dots' );
+        $this->assertEquals( 'not'.DIRECTORY_SEPARATOR.'a..parent'.DIRECTORY_SEPARATOR.'..dots-.cache', $id );
+    }
+
     public function testInvalidConfigurationOption()
     {
         try
