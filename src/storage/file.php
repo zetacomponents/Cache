@@ -635,6 +635,10 @@ abstract class ezcCacheStorageFile extends ezcCacheStorage implements ezcCacheSt
      * @param array(string=>string) $attributes  Attributes describing the
      *                                           data to restore.
      * @return string              The generated identifier
+     *
+     * @throws ezcBaseValueException
+     *         If the ID contains a ".." path segment, which would point
+     *         outside the cache location.
      */
     public function generateIdentifier( $id, $attributes = null )
     {
@@ -645,6 +649,10 @@ abstract class ezcCacheStorageFile extends ezcCacheStorage implements ezcCacheSt
             '\\' => DIRECTORY_SEPARATOR,
         );
         $filename = strtr( $filename, $illegalFileNameChars );
+        if ( in_array( '..', explode( DIRECTORY_SEPARATOR, $filename ), true ) )
+        {
+            throw new ezcBaseValueException( 'id', $id, 'a cache ID without ".." path segments' );
+        }
 
         // Chars used for filename concatination
         $illegalChars = array(
