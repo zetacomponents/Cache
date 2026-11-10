@@ -49,7 +49,7 @@ class ezcCacheComplexCacheTest extends ezcTestCase
     {
         if ( !self::$stackInitialized )
         {
-            if ( ezcBaseFeatures::hasExtensionSupport( 'apc' ) )
+            if ( ezcBaseFeatures::hasExtensionSupport( 'apcu' ) )
             {
                 $memoryStorage = new ezcCacheStorageApcPlain();
             }
